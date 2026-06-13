@@ -8,7 +8,7 @@ import json, re, os, urllib.request
 PIXEL    = "1022464693584913"
 PLAYLIST = "053laY69PHb8Sy27Xnb7Yh"
 TAGLINE  = "Raw acoustic · contemporary Christian"
-DOMAIN   = "music.solomonnights.com"
+DOMAIN   = "solomonnights.com"
 HERE     = os.path.dirname(os.path.abspath(__file__))
 ROOT     = os.path.dirname(HERE)
 
