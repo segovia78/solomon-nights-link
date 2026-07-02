@@ -75,30 +75,36 @@
     var box=document.querySelector('.nl');if(!box)return;
     var inp=box.querySelector('input'),btn=box.querySelector('button'),st=box.querySelector('.nl-status');
     var head=box.querySelector('.nl-head'),copy=box.querySelector('.nl-copy');
-    var src='song page: make-room-in-me',KEY='sn-armed',SUB='sn-subscribed';
+    var src='song page: make-room-in-me',KEY='sn-armed',SUB='sn-subscribed',POP='sn-popup-at';
+    var HERO='https://d3k81ch9hvuctc.cloudfront.net/company/XvWZZX/images/b837f171-5e9d-4478-a4c1-3ab12a1f8b71.jpeg';
+    var songEl=document.querySelector('h1.title')||document.querySelector('h1');
+    var song=songEl?songEl.textContent.replace(/^\s+|\s+$/g,''):'this song';
     function isSub(){try{return localStorage.getItem(SUB)==='1'}catch(e){return false}}
     var done=isSub();
-    function showSub(){inp.style.display='none';btn.style.display='none';st.textContent='';
+    function markSub(){done=true;try{localStorage.setItem(SUB,'1')}catch(e){}}
+    function subscribe(em,fn,tag,good,bad){
+      var attrs={email:em};if(fn)attrs.first_name=fn;
+      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=XvWZZX',{method:'POST',
+        headers:{'Content-Type':'application/json','revision':'2025-04-15'},
+        body:JSON.stringify({data:{type:'subscription',attributes:{custom_source:tag,
+          profile:{data:{type:'profile',attributes:attrs}}},
+          relationships:{list:{data:{type:'list',id:'WXzXBb'}}}}})
+      }).then(function(r){if(r.status===202){markSub();
+          if(window.fbq)fbq('trackCustom','EmailSignup',Object.assign({source:tag},window.meta||{}));
+          good();}else{bad();}
+      }).catch(bad);
+    }
+    function showSubCard(){inp.style.display='none';btn.style.display='none';st.textContent='';
       if(head)head.textContent='You are in';
       if(copy)copy.textContent='Welcome. New songs will find you first.';}
-    function submit(){
+    function cardSubmit(){
       var em=(inp.value||'').trim();
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){st.textContent='Please enter a valid email address.';return;}
       btn.disabled=true;st.textContent='One moment...';
-      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=XvWZZX',{method:'POST',
-        headers:{'Content-Type':'application/json','revision':'2025-04-15'},
-        body:JSON.stringify({data:{type:'subscription',attributes:{custom_source:src,
-          profile:{data:{type:'profile',attributes:{email:em}}}},
-          relationships:{list:{data:{type:'list',id:'WXzXBb'}}}}})
-      }).then(function(r){
-        if(r.status===202){done=true;try{localStorage.setItem(SUB,'1')}catch(e){}
-          showSub();
-          if(window.fbq)fbq('trackCustom','EmailSignup',Object.assign({source:src},window.meta||{}));}
-        else{st.textContent='Something went wrong. Please try again.';btn.disabled=false;}
-      }).catch(function(){st.textContent='Something went wrong. Please try again.';btn.disabled=false;});
+      subscribe(em,null,src,showSubCard,function(){st.textContent='Something went wrong. Please try again.';btn.disabled=false;});
     }
-    btn.addEventListener('click',submit);
-    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submit();}});
+    btn.addEventListener('click',cardSubmit);
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();cardSubmit();}});
     function pulse(){box.classList.remove('nl-hot');void box.offsetWidth;box.classList.add('nl-hot');}
     function transform(){if(done)return;
       if(head)head.textContent='Before anyone else hears it';
@@ -106,13 +112,65 @@
     function armedHere(){try{var v=sessionStorage.getItem(KEY);if(!v)return false;
       var o=JSON.parse(v);return o.p===location.pathname&&(Date.now()-o.t)<1800000;}catch(e){return false}}
     function arm(){try{sessionStorage.setItem(KEY,JSON.stringify({p:location.pathname,t:Date.now()}))}catch(e){}}
-    function comeback(){if(done||!armedHere())return;transform();pulse();
-      try{box.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}}
+    function popRecently(){try{var t=+localStorage.getItem(POP)||0;return (Date.now()-t)<604800000;}catch(e){return false}}
+    function markPop(){try{localStorage.setItem(POP,String(Date.now()))}catch(e){}}
+    var popShownThisLoad=false;
+    function showPopup(){
+      if(done||popShownThisLoad||popRecently()||document.getElementById('sn-pop'))return;
+      popShownThisLoad=true;markPop();
+      var ov=document.createElement('div');ov.id='sn-pop';
+      ov.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(5,7,12,0.85);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .3s;';
+      ov.innerHTML=''+
+      '<div id="sn-pop-card" style="max-width:340px;width:100%;background:#0d1119;border:1px solid #c9a27a;border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,0.6);transform:translateY(14px);transition:transform .3s;">'+
+        '<div style="position:relative;">'+
+          '<img src="'+HERO+'" alt="Solomon Nights" style="display:block;width:100%;height:150px;object-fit:cover;">'+
+          '<div id="sn-pop-x" style="position:absolute;top:8px;right:10px;width:30px;height:30px;line-height:28px;border-radius:50%;background:rgba(7,9,15,0.65);color:#cfd5e2;font-size:17px;cursor:pointer;font-family:Arial,sans-serif;">&#215;</div>'+
+        '</div>'+
+        '<div style="padding:18px 22px 20px 22px;">'+
+          '<div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:#e8a84b;text-transform:uppercase;margin-bottom:8px;">Your welcome gift</div>'+
+          '<div style="font-family:Georgia,serif;font-size:23px;color:#f4f1ea;margin-bottom:10px;">I made you something.</div>'+
+          '<div style="font-family:Georgia,serif;font-size:14.5px;line-height:22px;color:#c9cfdc;margin-bottom:14px;">You pressed play on <em style="color:#f4f1ea;">'+song+'</em>. Take something to keep: a framed lyric print and a prayer for the night road, made for your wall or your phone. Tell me where to send them and every new song reaches you first.</div>'+
+          '<input id="sn-pop-name" type="text" placeholder="your first name" autocomplete="given-name" style="width:100%;box-sizing:border-box;background:#161b26;border:1px solid #2a3450;border-radius:9px;color:#f3ece4;font-size:14px;padding:12px 14px;outline:none;margin-bottom:8px;">'+
+          '<input id="sn-pop-email" type="email" placeholder="your email" autocomplete="email" style="width:100%;box-sizing:border-box;background:#161b26;border:1px solid #2a3450;border-radius:9px;color:#f3ece4;font-size:14px;padding:12px 14px;outline:none;">'+
+          '<button id="sn-pop-go" type="button" style="width:100%;margin-top:10px;background:#e8a84b;color:#141210;border:0;border-radius:9px;font-size:15px;font-weight:bold;padding:13px;cursor:pointer;font-family:Arial,sans-serif;">Send me the gift</button>'+
+          '<div id="sn-pop-status" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;margin-top:8px;min-height:15px;"></div>'+
+          '<div style="font-family:Arial,sans-serif;font-size:11px;color:#5c657a;margin-top:2px;">No noise. Just the songs and the stories. Unsubscribe anytime.</div>'+
+          '<div id="sn-pop-later" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;text-decoration:underline;cursor:pointer;margin-top:10px;">maybe later</div>'+
+        '</div>'+
+      '</div>';
+      document.body.appendChild(ov);
+      if(window.fbq)fbq('trackCustom','GiftPopupView',Object.assign({song:song},window.meta||{}));
+      requestAnimationFrame(function(){ov.style.opacity='1';document.getElementById('sn-pop-card').style.transform='translateY(0)';});
+      function close(){ov.style.opacity='0';setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov);},300);}
+      document.getElementById('sn-pop-x').addEventListener('click',close);
+      document.getElementById('sn-pop-later').addEventListener('click',close);
+      ov.addEventListener('click',function(e){if(e.target===ov)close();});
+      document.addEventListener('keydown',function esc(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',esc);}});
+      var pn=document.getElementById('sn-pop-name'),pe=document.getElementById('sn-pop-email'),
+          pg=document.getElementById('sn-pop-go'),ps=document.getElementById('sn-pop-status');
+      function go(){
+        var em=(pe.value||'').trim(),fn=(pn.value||'').trim();
+        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ps.textContent='Please enter a valid email address.';pe.focus();return;}
+        pg.disabled=true;ps.textContent='One moment...';
+        subscribe(em,fn,'gift popup: make-room-in-me',function(){
+          var card=document.getElementById('sn-pop-card');
+          card.innerHTML='<div style="padding:38px 26px;text-align:center;">'+
+            '<div style="font-family:Georgia,serif;font-size:24px;color:#f4f1ea;margin-bottom:10px;">It is on the way'+(fn?', '+fn:'')+'.</div>'+
+            '<div style="font-family:Georgia,serif;font-size:15px;line-height:23px;color:#c9cfdc;">Check your inbox. The gift is yours, and every new song will find you first.</div>'+
+            '<div id="sn-pop-done" style="font-family:Arial,sans-serif;font-size:13px;color:#e8a84b;text-decoration:underline;cursor:pointer;margin-top:18px;">close</div></div>';
+          document.getElementById('sn-pop-done').addEventListener('click',close);
+          showSubCard();setTimeout(close,6000);
+        },function(){ps.textContent='Something went wrong. Please try again.';pg.disabled=false;});
+      }
+      pg.addEventListener('click',go);
+      [pn,pe].forEach(function(f){f.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go();}});});
+    }
+    function comeback(){if(done||!armedHere())return;transform();pulse();showPopup();}
     ['save','follow'].forEach(function(id){var el=document.getElementById(id);
       if(el)el.addEventListener('click',function(){arm();transform();});});
     document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')comeback();});
     window.addEventListener('pageshow',function(){comeback();});
-    if(done){showSub();}
+    if(done){showSubCard();}
     else if(armedHere()){transform();}
     })();
     </script>
