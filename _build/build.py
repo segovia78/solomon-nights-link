@@ -195,8 +195,14 @@ PAGE = """<!doctype html>
     function comeback(){if(done||!armedHere())return;transform();pulse();showPopup();}
     ['save','follow'].forEach(function(id){var el=document.getElementById(id);
       if(el)el.addEventListener('click',function(){arm();transform();});});
-    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')comeback();});
-    window.addEventListener('pageshow',function(){comeback();});
+    var _origTitle=document.title,_iconSaved=null,_lantern='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%230d1119%22/%3E%3Cpath%20d%3D%22M13%206h6%22%20stroke%3D%22%23e8a84b%22%20stroke-width%3D%221.6%22/%3E%3Cpath%20d%3D%22M16%206V9%22%20stroke%3D%22%23e8a84b%22%20stroke-width%3D%221.6%22/%3E%3Crect%20x%3D%2210.5%22%20y%3D%229%22%20width%3D%2211%22%20height%3D%2216%22%20rx%3D%223%22%20fill%3D%22none%22%20stroke%3D%22%23e8a84b%22%20stroke-width%3D%221.7%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%223.4%22%20fill%3D%22%23ffcf7a%22/%3E%3C/svg%3E';
+    function _icons(){return document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]');}
+    function nudge(){if(done||!armedHere())return;document.title='\uD83C\uDF81 Your gift is waiting';
+      try{if(_iconSaved===null){_iconSaved=[];_icons().forEach(function(l){_iconSaved.push([l,l.getAttribute('href')]);});}
+        _icons().forEach(function(l){l.setAttribute('href',_lantern);});}catch(e){}}
+    function unnudge(){document.title=_origTitle;try{if(_iconSaved){_iconSaved.forEach(function(p){p[0].setAttribute('href',p[1]);});}}catch(e){}}
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){unnudge();comeback();}else{nudge();}});
+    window.addEventListener('pageshow',function(){unnudge();comeback();});
     if(done){showSubCard();}
     else if(armedHere()){transform();}
     })();
@@ -408,8 +414,14 @@ HOME = """<!doctype html>
     function comeback(){if(done||!armedHere())return;transform();pulse();showPopup();}
     ['save','follow'].forEach(function(id){var el=document.getElementById(id);
       if(el)el.addEventListener('click',function(){arm();transform();});});
-    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')comeback();});
-    window.addEventListener('pageshow',function(){comeback();});
+    var _origTitle=document.title,_iconSaved=null,_lantern='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%230d1119%22/%3E%3Cpath%20d%3D%22M13%206h6%22%20stroke%3D%22%23e8a84b%22%20stroke-width%3D%221.6%22/%3E%3Cpath%20d%3D%22M16%206V9%22%20stroke%3D%22%23e8a84b%22%20stroke-width%3D%221.6%22/%3E%3Crect%20x%3D%2210.5%22%20y%3D%229%22%20width%3D%2211%22%20height%3D%2216%22%20rx%3D%223%22%20fill%3D%22none%22%20stroke%3D%22%23e8a84b%22%20stroke-width%3D%221.7%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2217%22%20r%3D%223.4%22%20fill%3D%22%23ffcf7a%22/%3E%3C/svg%3E';
+    function _icons(){return document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]');}
+    function nudge(){if(done||!armedHere())return;document.title='\uD83C\uDF81 Your gift is waiting';
+      try{if(_iconSaved===null){_iconSaved=[];_icons().forEach(function(l){_iconSaved.push([l,l.getAttribute('href')]);});}
+        _icons().forEach(function(l){l.setAttribute('href',_lantern);});}catch(e){}}
+    function unnudge(){document.title=_origTitle;try{if(_iconSaved){_iconSaved.forEach(function(p){p[0].setAttribute('href',p[1]);});}}catch(e){}}
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){unnudge();comeback();}else{nudge();}});
+    window.addEventListener('pageshow',function(){unnudge();comeback();});
     if(done){showSubCard();}
     else if(armedHere()){transform();}
     })();
