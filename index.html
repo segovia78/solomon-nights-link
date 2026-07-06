@@ -108,14 +108,15 @@
         .nl.nl-hot{border-color:#c9a27a !important;animation:nlpulse 1.6s ease-in-out 3;}
         .nl input:focus{border-color:#c9a27a !important;}
       </style>
-      <div class="nl-head" style="color:#c9a27a;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">New songs first</div>
-      <div class="nl-copy" style="color:#b9a895;font-size:13px;line-height:1.55;margin-bottom:12px;">Leave your email and every new song reaches you before anywhere else.</div>
+      <div class="nl-head" style="color:#c9a27a;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600;">A welcome gift</div>
+      <div class="nl-copy" style="color:#b9a895;font-size:13px;line-height:1.55;margin-bottom:12px;">Leave your email for a free lyric print and a prayer card, and every new song reaches you first.</div>
       <input type="email" placeholder="your email" autocomplete="email" style="width:100%;box-sizing:border-box;background:#221b16;border:0.5px solid #3a322c;border-radius:9px;color:#f3ece4;font-size:14px;padding:12px 14px;outline:none;" />
       <button type="button" style="width:100%;margin-top:9px;background:#c9a27a;color:#241a12;border:0;border-radius:9px;font-size:14px;font-weight:600;padding:12px;cursor:pointer;">Keep me posted</button>
       <div class="nl-status" style="color:#8a7b6d;font-size:12px;margin-top:8px;min-height:15px;"></div>
     </div>
     <script>
     (function(){
+    if(!window.__snGeoInit){window.__snGeoInit=1;window.__snGeo=null;try{fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(g){if(g&&g.country_code&&!g.error)window.__snGeo={code:g.country_code,name:g.country_name||g.country_code};}).catch(function(){});}catch(e){}}
     var box=document.querySelector('.nl');if(!box)return;
     var inp=box.querySelector('input'),btn=box.querySelector('button'),st=box.querySelector('.nl-status');
     var head=box.querySelector('.nl-head'),copy=box.querySelector('.nl-copy');
@@ -128,6 +129,7 @@
     function markSub(){done=true;try{localStorage.setItem(SUB,'1')}catch(e){}}
     function subscribe(em,fn,tag,good,bad){
       var attrs={email:em};if(fn)attrs.first_name=fn;
+      var _g=window.__snGeo;if(_g){attrs.location={country:_g.name};attrs.properties={country:_g.name,country_code:_g.code};}
       fetch('https://a.klaviyo.com/client/subscriptions/?company_id=XvWZZX',{method:'POST',
         headers:{'Content-Type':'application/json','revision':'2025-04-15'},
         body:JSON.stringify({data:{type:'subscription',attributes:{custom_source:tag,
@@ -178,7 +180,7 @@
           '<input id="sn-pop-email" type="email" placeholder="your email" autocomplete="email" style="width:100%;box-sizing:border-box;background:#161b26;border:1px solid #2a3450;border-radius:9px;color:#f3ece4;font-size:14px;padding:12px 14px;outline:none;">'+
           '<button id="sn-pop-go" type="button" style="width:100%;margin-top:10px;background:#e8a84b;color:#141210;border:0;border-radius:9px;font-size:15px;font-weight:bold;padding:13px;cursor:pointer;font-family:Arial,sans-serif;">Send me the gift</button>'+
           '<div id="sn-pop-status" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;margin-top:8px;min-height:15px;"></div>'+
-          '<div style="font-family:Arial,sans-serif;font-size:11px;color:#5c657a;margin-top:2px;">No noise. Just the songs and the stories. Unsubscribe anytime.</div>'+
+          '<div style="font-family:Arial,sans-serif;font-size:11px;color:#5c657a;margin-top:2px;">No spam, and the songs always come first. Unsubscribe anytime.</div>'+
           '<div id="sn-pop-later" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;text-decoration:underline;cursor:pointer;margin-top:10px;">maybe later</div>'+
         '</div>'+
       '</div>';
