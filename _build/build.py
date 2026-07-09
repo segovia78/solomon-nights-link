@@ -42,8 +42,8 @@ PAGE = """<!doctype html>
 <link rel="icon" href="@@COVER@@" />
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin: 0; height: 100%; }
-  body { background: #15110f; color: #f3ece4; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100svh; padding: 24px; }
+  html, body { margin: 0; }
+  body { background: #15110f; color: #f3ece4; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: safe center; justify-content: center; min-height: 100svh; padding: 24px; }
   .card { width: 100%; max-width: 360px; text-align: center; }
   .artist { color: #c9a27a; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; }
   .artist a { color: inherit; text-decoration: none; }
