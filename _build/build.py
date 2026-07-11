@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# WARNING (2026-07-11): these templates are STALE relative to the live pages.
+# Live song pages and the homepage carry direct edits (form position, ipapi geo
+# enrichment, popup timers and wording, a11y buttons, cover preload) that are NOT
+# in these templates. Re-sync PAGE/HOME from a current live page (e.g.
+# when-i-cannot-see/index.html) BEFORE running this script, or it will clobber them.
+
 """Generate the Solomon Nights site: a rich artist homepage (/) + one Spotify-save
 landing page per song (/<slug>/). Add a song: append {title, trackId} to
 songs.json and re-run. Cover art is fetched from Spotify oEmbed at build time.

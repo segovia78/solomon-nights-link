@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Solomon Nights · When I Cannot See</title>
+<link rel="preload" as="image" href="https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b27335f56d6346c8ecbc975a4c74" fetchpriority="high">
 <meta name="description" content="Listen to Solomon Nights and save the playlist on Spotify. Raw, stripped-back, acoustic contemporary Christian music." />
 <meta property="og:type" content="music.song" />
 <meta property="og:title" content="Solomon Nights · When I Cannot See" />
@@ -42,7 +43,7 @@
 <body>
   <main class="card">
     <div class="artist"><a href="/">Solomon Nights</a></div>
-    <img class="cover" alt="When I Cannot See · Solomon Nights cover art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b27335f56d6346c8ecbc975a4c74" />
+    <img class="cover" width="640" height="640" alt="When I Cannot See · Solomon Nights cover art" src="https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b27335f56d6346c8ecbc975a4c74" />
     <h1 class="title">When I Cannot See</h1>
     <p class="tag">Raw acoustic · contemporary Christian</p>
     <p class="blurb">A prayer for the times we are walking in the dark. It does not ask for the whole road to light up, only for enough light for the next step, and a hand to hold when we cannot stand on our own.</p>
@@ -108,26 +109,27 @@
     btn.addEventListener('click',cardSubmit);
     inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();cardSubmit();}});
     function pulse(){box.classList.remove('nl-hot');void box.offsetWidth;box.classList.add('nl-hot');}
-    function transform(){if(done)return;
+    function transform(kind){if(done)return;var k=kind||armedKind();
       if(head)head.textContent='Before anyone else hears it';
-      if(copy)copy.textContent='You pressed play on this one early. Leave your email and the next song reaches you first.';}
+      if(copy)copy.textContent=(k==='follow'?'You followed Solomon Nights early.':'You pressed play on this one early.')+' Leave your email and the next song reaches you first.';}
     function armedHere(){try{var v=sessionStorage.getItem(KEY);if(!v)return false;
       var o=JSON.parse(v);return o.p===location.pathname&&(Date.now()-o.t)<1800000;}catch(e){return false}}
-    function arm(){try{sessionStorage.setItem(KEY,JSON.stringify({p:location.pathname,t:Date.now()}))}catch(e){}}
+    function arm(k){try{sessionStorage.setItem(KEY,JSON.stringify({p:location.pathname,t:Date.now(),k:k||'play'}))}catch(e){}}
+    function armedKind(){try{var v=sessionStorage.getItem(KEY);if(!v)return null;var o=JSON.parse(v);return (o.p===location.pathname&&(Date.now()-o.t)<1800000)?(o.k||'play'):null}catch(e){return null}}
     function popRecently(){try{var t=+localStorage.getItem(POP)||0;return (Date.now()-t)<604800000;}catch(e){return false}}
     function markPop(){try{localStorage.setItem(POP,String(Date.now()))}catch(e){}}
     var popShownThisLoad=false;
     function showPopup(){
       if(done||popShownThisLoad||popRecently()||document.getElementById('sn-pop'))return;
       popShownThisLoad=true;markPop();
-      var intro=armedHere()?'You pressed play on':'You found';
+      var k=armedKind();var intro=k==='follow'?'You followed the voice behind':(k?'You pressed play on':'You found');
       var ov=document.createElement('div');ov.id='sn-pop';
       ov.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(5,7,12,0.85);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .3s;';
       ov.innerHTML=''+
       '<div id="sn-pop-card" style="max-width:340px;width:100%;background:#0d1119;border:1px solid #c9a27a;border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,0.6);transform:translateY(14px);transition:transform .3s;">'+
         '<div style="position:relative;">'+
           '<img src="'+HERO+'" alt="Solomon Nights" style="display:block;width:100%;height:150px;object-fit:cover;">'+
-          '<div id="sn-pop-x" style="position:absolute;top:8px;right:10px;width:30px;height:30px;line-height:28px;border-radius:50%;background:rgba(7,9,15,0.65);color:#cfd5e2;font-size:17px;cursor:pointer;font-family:Arial,sans-serif;">&#215;</div>'+
+          '<button id="sn-pop-x" type="button" aria-label="Close" style="position:absolute;top:8px;right:10px;width:30px;height:30px;line-height:28px;border-radius:50%;border:0;padding:0;background:rgba(7,9,15,0.65);color:#cfd5e2;font-size:17px;cursor:pointer;font-family:Arial,sans-serif;">&#215;</button>'+
         '</div>'+
         '<div style="padding:18px 22px 20px 22px;">'+
           '<div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:#e8a84b;text-transform:uppercase;margin-bottom:8px;">Your welcome gift</div>'+
@@ -138,13 +140,17 @@
           '<button id="sn-pop-go" type="button" style="width:100%;margin-top:10px;background:#e8a84b;color:#141210;border:0;border-radius:9px;font-size:15px;font-weight:bold;padding:13px;cursor:pointer;font-family:Arial,sans-serif;">Send me the gift</button>'+
           '<div id="sn-pop-status" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;margin-top:8px;min-height:15px;"></div>'+
           '<div style="font-family:Arial,sans-serif;font-size:11px;color:#5c657a;margin-top:2px;">No spam, and the songs always come first. Unsubscribe anytime.</div>'+
-          '<div id="sn-pop-later" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;text-decoration:underline;cursor:pointer;margin-top:10px;">maybe later</div>'+
+          '<button id="sn-pop-later" type="button" style="font-family:Arial,sans-serif;font-size:12px;color:#8b93a7;text-decoration:underline;cursor:pointer;margin-top:10px;background:none;border:0;padding:0;">maybe later</button>'+
         '</div>'+
       '</div>';
+      ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Welcome gift');
+      var _prevFocus=document.activeElement;
       document.body.appendChild(ov);
+      setTimeout(function(){var f=document.getElementById('sn-pop-email');if(f)f.focus();},350);
+      ov.addEventListener('keydown',function(e){if(e.key!=='Tab')return;var els=ov.querySelectorAll('button,input');if(!els.length)return;var first=els[0],last=els[els.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
       if(window.fbq)fbq('trackCustom','GiftPopupView',Object.assign({song:song},window.meta||{}));
       requestAnimationFrame(function(){ov.style.opacity='1';document.getElementById('sn-pop-card').style.transform='translateY(0)';});
-      function close(){ov.style.opacity='0';setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov);},300);}
+      function close(){ov.style.opacity='0';setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov);},300);try{if(_prevFocus&&_prevFocus.focus)_prevFocus.focus();}catch(e){}}
       document.getElementById('sn-pop-x').addEventListener('click',close);
       document.getElementById('sn-pop-later').addEventListener('click',close);
       ov.addEventListener('click',function(e){if(e.target===ov)close();});
@@ -160,7 +166,7 @@
           card.innerHTML='<div style="padding:38px 26px;text-align:center;">'+
             '<div style="font-family:Georgia,serif;font-size:24px;color:#f4f1ea;margin-bottom:10px;">It is on the way'+(fn?', '+fn:'')+'.</div>'+
             '<div style="font-family:Georgia,serif;font-size:15px;line-height:23px;color:#c9cfdc;">Check your inbox. The gift is yours, and every new song will find you first.</div>'+
-            '<div id="sn-pop-done" style="font-family:Arial,sans-serif;font-size:13px;color:#e8a84b;text-decoration:underline;cursor:pointer;margin-top:18px;">close</div></div>';
+            '<button id="sn-pop-done" type="button" style="font-family:Arial,sans-serif;font-size:13px;color:#e8a84b;text-decoration:underline;cursor:pointer;margin-top:18px;background:none;border:0;padding:0;">close</button></div>';
           document.getElementById('sn-pop-done').addEventListener('click',close);
           showSubCard();setTimeout(close,6000);
         },function(){ps.textContent='Something went wrong. Please try again.';pg.disabled=false;});
@@ -170,7 +176,7 @@
     }
     function comeback(){if(done||!armedHere())return;transform();pulse();showPopup();}
     ['save','follow'].forEach(function(id){var el=document.getElementById(id);
-      if(el)el.addEventListener('click',function(){arm();transform();});});
+      if(el)el.addEventListener('click',function(){var k=id==='follow'?'follow':'play';arm(k);transform(k);});});
     function engagedPop(){if(done||armedHere())return;showPopup();}
     setTimeout(engagedPop,25000);
     if(!('ontouchstart' in window)){document.addEventListener('mouseout',function(e){if(e.clientY<=0&&!e.relatedTarget)engagedPop();});}
