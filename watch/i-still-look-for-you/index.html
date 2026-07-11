@@ -58,17 +58,34 @@
   </main>
   <footer class="foot"><a href="/i-still-look-for-you/">&lsaquo; Back to the song</a><a href="/#videos">All music video clips</a><a href="/">Home</a></footer>
 <script>
+window.__snConsent=function(start){
+  var tz='';try{tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');}catch(e){}
+  var eu=tz.indexOf('Europe/')===0;
+  var c=null;try{c=localStorage.getItem('sn-consent');}catch(e){}
+  if(!eu||c==='granted'){start();return;}
+  if(c==='denied')return;
+  var b=document.createElement('div');
+  b.id='sn-consent-bar';b.setAttribute('role','region');b.setAttribute('aria-label','Cookies');
+  b.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99998;background:#0d1119;border-top:1px solid #c9a27a;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:13px;color:#c9cfdc;';
+  b.innerHTML='<span>A few cookies help us know which songs find people. Nothing is tracked unless you agree.</span>'+
+   '<button id="sn-cc-ok" type="button" style="background:#e8a84b;color:#141210;border:0;border-radius:8px;padding:8px 18px;font-weight:bold;cursor:pointer;">Accept</button>'+
+   '<button id="sn-cc-no" type="button" style="background:none;color:#8b93a7;border:1px solid #2a3450;border-radius:8px;padding:8px 14px;cursor:pointer;">Decline</button>';
+  function ready(){document.body.appendChild(b);
+    document.getElementById('sn-cc-ok').addEventListener('click',function(){try{localStorage.setItem('sn-consent','granted');}catch(e){}b.remove();start();});
+    document.getElementById('sn-cc-no').addEventListener('click',function(){try{localStorage.setItem('sn-consent','denied');}catch(e){}b.remove();});}
+  if(document.body)ready();else document.addEventListener('DOMContentLoaded',ready);
+};
+</script>
+<script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1022464693584913');
 var utm={};location.search.replace(/^\?/,'').split('&').forEach(function(p){
   if(!p)return;var kv=p.split('=');if(/^utm_/.test(kv[0]))utm[kv[0]]=decodeURIComponent(kv[1]||'');});
 var meta=Object.assign({artist:'solomon_nights',song:'I Still Look For You',content_name:'I Still Look For You',content_category:'solomon_nights',page:'music video clip'},utm);
-fbq('track','PageView',meta);
-fbq('track','ViewContent',meta);
+window.__snStart=function(){fbq('init','1022464693584913');fbq('track','PageView',meta);fbq('track','ViewContent',meta);};__snConsent(window.__snStart);
 var sv=document.getElementById('save');
 if(sv)sv.addEventListener('click',function(){fbq('trackCustom','SpotifySaveClick',meta);fbq('track','Lead',meta);});
 var fl=document.getElementById('follow');if(fl)fl.addEventListener('click',function(){fbq('trackCustom','SpotifyFollowClick',meta);fbq('track','Lead',meta);});
