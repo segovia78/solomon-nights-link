@@ -123,5 +123,31 @@ window.__snStart=function(){fbq('init','1022464693584913');fbq('track','PageView
   });
 })();
 </script>
+<script>
+/* GA4 first-party measurement (G-GKB9H348P3): consent-aware, mirrors the fbq gate.
+   Added 2026-07-16 because Meta blocks UK/EU pixel events on this Religion-categorized
+   domain; GA4 is the durable funnel measure. Do not remove. */
+(function(){
+  function gaStart(){ if(window.__gaStarted)return; window.__gaStarted=1;
+    var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=G-GKB9H348P3';document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments);};
+    gtag('js',new Date());gtag('config','G-GKB9H348P3');
+    var m=window.meta||{};
+    function hook(id,act){var el=document.getElementById(id);if(el)el.addEventListener('click',function(){gtag('event','spotify_click',{action:act,song:m.song||'',artist:'solomon_nights'});});}
+    hook('save','save');hook('follow','follow');
+  }
+  var tz='';try{tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');}catch(e){}
+  var eu=tz.indexOf('Europe/')===0;var c=null;try{c=localStorage.getItem('sn-consent');}catch(e){}
+  if(!eu||c==='granted'){gaStart();return;}
+  if(c==='denied')return;
+  var t=setInterval(function(){
+    var ok=document.getElementById('sn-cc-ok');if(ok&&!ok.__ga){ok.__ga=1;ok.addEventListener('click',gaStart);}
+    var cc=null;try{cc=localStorage.getItem('sn-consent');}catch(e){}
+    if(cc==='granted'){clearInterval(t);gaStart();}
+    if(cc==='denied')clearInterval(t);
+  },500);
+  setTimeout(function(){clearInterval(t);},120000);
+})();
+</script>
 </body>
 </html>
