@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>One free night · Solomon Nights</title>
+<meta name="description" content="One designed night for when sleep will not come: a page to read, a scripture, a prayer, a phone wallpaper, and a song to play low in the dark. Free." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="One free night, for when sleep will not come" />
+<meta property="og:description" content="A page to read before sleep, a scripture, a prayer, a wallpaper, and a song to play low in the dark. Free, from Solomon Nights." />
+<meta property="og:image" content="https://music.solomonnights.com/free-night/cover.jpg" />
+<meta property="og:url" content="https://music.solomonnights.com/free-night/" />
+<meta name="theme-color" content="#15110f" />
+<link rel="icon" href="/favicon-32.png" />
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; }
+  body { background: #15110f; color: #f3ece4; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: safe center; justify-content: center; min-height: 100svh; padding: 24px; }
+  .card { width: 100%; max-width: 380px; text-align: center; }
+  .artist { color: #c9a27a; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; }
+  .artist a { color: inherit; text-decoration: none; }
+  .cover { width: 62%; border-radius: 10px; border: 0.5px solid #3a322c; display: block; margin: 0 auto; background: #221b16; box-shadow: 0 18px 50px rgba(0,0,0,0.5); }
+  h1 { font-size: 24px; font-weight: 650; margin: 22px 0 8px; line-height: 1.25; }
+  .sub { color: #b9a895; font-size: 14.5px; line-height: 1.65; margin: 0 0 20px; }
+  .form { padding: 18px 16px 16px; background: rgba(201,162,122,0.07); border: 1px solid #4a3f35; border-radius: 12px; text-align: left; }
+  .form input { width: 100%; background: #221b16; border: 0.5px solid #3a322c; border-radius: 9px; color: #f3ece4; font-size: 15px; padding: 13px 14px; outline: none; }
+  .form input:focus { border-color: #c9a27a; }
+  .form input + input { margin-top: 9px; }
+  .form button { width: 100%; margin-top: 10px; background: #c9a27a; color: #241a12; border: 0; border-radius: 9px; font-size: 15px; font-weight: 650; padding: 14px; cursor: pointer; }
+  .form button:active { transform: scale(0.99); }
+  .status { color: #8a7b6d; font-size: 12.5px; margin-top: 8px; min-height: 16px; }
+  .trust { color: #8a7b6d; font-size: 12px; margin-top: 10px; line-height: 1.55; }
+  .what { text-align: left; margin: 26px 0 4px; }
+  .what h2 { color: #c9a27a; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 10px; }
+  .what ul { margin: 0; padding: 0 0 0 2px; list-style: none; }
+  .what li { color: #b9a895; font-size: 14px; line-height: 1.6; padding-left: 22px; position: relative; margin-bottom: 7px; }
+  .what li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: #c9a27a; }
+  .save { display: flex; align-items: center; justify-content: center; gap: 9px; background: transparent; color: #1db954; border: 1.5px solid #2f7d4f; font-size: 15px; font-weight: 600; text-decoration: none; padding: 14px; border-radius: 26px; width: 100%; margin-top: 18px; }
+  .save:hover { border-color: #1db954; }
+  .foot { color: #8a7b6d; font-size: 13px; margin-top: 26px; padding-top: 18px; border-top: 0.5px solid #2c251f; }
+  .foot a { color: #c9a27a; text-decoration: none; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="artist"><a href="/">Solomon Nights</a></div>
+    <img class="cover" width="437" height="620" alt="One Night, a free devotional page from Solomon Nights" src="cover.jpg" />
+    <h1>One free night, for when sleep will not come</h1>
+    <p class="sub">A single designed night from the Seven Nights devotionals: a page to read slowly before you sleep, a scripture to sit with, a prayer you can whisper, a phone wallpaper, and a song to play low in the dark. Yours, free.</p>
+    <div class="form" id="fnform">
+      <input type="text" id="fn-name" placeholder="your first name (optional)" autocomplete="given-name" />
+      <input type="email" id="fn-email" placeholder="your email" autocomplete="email" />
+      <button type="button" id="fn-btn">Send me my free night</button>
+      <div class="status" id="fn-status"></div>
+      <div class="trust">Free and instant. No noise, unsubscribe whenever you like. There is a real person on the other end of these songs.</div>
+    </div>
+    <div class="what">
+      <h2>Inside your night</h2>
+      <ul>
+        <li>The night itself: written for the hours when the road ahead gives you nothing</li>
+        <li>Psalm 23:4 to sit with, and a prayer for when words are hard to find</li>
+        <li>A phone wallpaper from the When I Cannot See set</li>
+      </ul>
+    </div>
+    <a target="_blank" rel="noopener" id="listen" class="save" href="https://open.spotify.com/track/6NpErEa7y3cMgUcvB6w5Oq?context=spotify:playlist:053laY69PHb8Sy27Xnb7Yh">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="#1db954" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.59 14.44a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.82-.88 7.09-.5 9.72 1.1.3.18.39.57.21.86Zm1.22-2.72a.78.78 0 0 1-1.07.26c-2.69-1.66-6.79-2.14-9.97-1.17a.78.78 0 1 1-.45-1.49c3.63-1.1 8.15-.57 11.24 1.33.36.22.48.7.25 1.07Zm.11-2.84C14.8 8.92 9.5 8.74 6.45 9.67a.93.93 0 1 1-.54-1.78c3.5-1.06 9.35-.86 12.99 1.3a.93.93 0 1 1-.95 1.6Z"/></svg>
+      Hear the song this night was written for
+    </a>
+    <div class="foot">Part of the <a href="https://solomonnights.com/">Seven Nights devotionals</a> · <a href="/">All songs</a></div>
+  </main>
+<script>
+(function(){
+  var btn=document.getElementById('fn-btn'),em=document.getElementById('fn-email'),nm=document.getElementById('fn-name'),st=document.getElementById('fn-status');
+  var box=document.getElementById('fnform');
+  function ok(){
+    box.querySelectorAll('input,button').forEach(function(el){el.style.display='none';});
+    st.innerHTML='<strong style="color:#c9a27a;">Your night is on its way.</strong> Check your inbox in the next few minutes. While it travels, press play below and let the song find you first.';
+    var l=document.getElementById('listen'); if(l){l.style.borderColor='#1db954';l.style.background='rgba(29,185,84,0.08)';}
+    try{if(window.fbq)fbq('trackCustom','EmailSignup',Object.assign({source:'free night landing'},window.meta||{}));}catch(e){}
+    try{if(window.gtag)gtag('event','email_signup',{source:'free night landing'});}catch(e){}
+  }
+  function submit(){
+    var e=(em.value||'').trim(), n=(nm.value||'').trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){st.textContent='Please enter a valid email address.';return;}
+    btn.disabled=true;st.textContent='One moment...';
+    var attrs={email:e}; if(n)attrs.first_name=n;
+    fetch('https://a.klaviyo.com/client/subscriptions/?company_id=XvWZZX',{method:'POST',
+      headers:{'Content-Type':'application/json','revision':'2025-04-15'},
+      body:JSON.stringify({data:{type:'subscription',attributes:{custom_source:'free night landing',
+        profile:{data:{type:'profile',attributes:attrs}}},
+        relationships:{list:{data:{type:'list',id:'YbUE6Z'}}}}})
+    }).then(function(r){ if(r.status===202){ok();} else {st.textContent='Something went wrong. Please try again.';btn.disabled=false;} })
+      .catch(function(){st.textContent='Something went wrong. Please try again.';btn.disabled=false;});
+  }
+  btn.addEventListener('click',submit);
+  em.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submit();}});
+})();
+</script>
+<script>
+window.__snConsent=function(start){
+  var tz='';try{tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');}catch(e){}
+  var eu=tz.indexOf('Europe/')===0;
+  var c=null;try{c=localStorage.getItem('sn-consent');}catch(e){}
+  if(!eu||c==='granted'){start();return;}
+  if(c==='denied')return;
+  var b=document.createElement('div');
+  b.id='sn-consent-bar';b.setAttribute('role','region');b.setAttribute('aria-label','Cookies');
+  b.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99998;background:#0d1119;border-top:1px solid #c9a27a;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:13px;color:#c9cfdc;';
+  b.innerHTML='<span>A few cookies help us know which songs find people. Nothing is tracked unless you agree.</span>'+
+   '<button id="sn-cc-ok" type="button" style="background:#e8a84b;color:#141210;border:0;border-radius:8px;padding:8px 18px;font-weight:bold;cursor:pointer;">Accept</button>'+
+   '<button id="sn-cc-no" type="button" style="background:none;color:#8b93a7;border:1px solid #2a3450;border-radius:8px;padding:8px 14px;cursor:pointer;">Decline</button>';
+  function ready(){document.body.appendChild(b);
+    document.getElementById('sn-cc-ok').addEventListener('click',function(){try{localStorage.setItem('sn-consent','granted');}catch(e){}b.remove();start();});
+    document.getElementById('sn-cc-no').addEventListener('click',function(){try{localStorage.setItem('sn-consent','denied');}catch(e){}b.remove();});}
+  if(document.body)ready();else document.addEventListener('DOMContentLoaded',ready);
+};
+</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+var utm={};location.search.replace(/^\?/,'').split('&').forEach(function(p){
+  if(!p)return;var kv=p.split('=');if(/^utm_/.test(kv[0]))utm[kv[0]]=decodeURIComponent(kv[1]||'');});
+var meta=Object.assign({artist:'solomon_nights',song:'Free Night landing',content_name:'Free Night landing',content_category:'solomon_nights'},utm);
+window.__snStart=function(){fbq('init','1022464693584913');fbq('track','PageView',meta);fbq('track','ViewContent',meta);};__snConsent(window.__snStart);
+</script>
+<script>
+function snShare(p){var url=location.href;var h1=document.querySelector('h1.title')||document.querySelector('h1');var song=h1?h1.textContent:'this song';var txt='Listen to '+song+' by Solomon Nights';try{if(window.fbq)fbq('trackCustom','ShareClick',{platform:p,song:song});}catch(e){}if(p==='facebook'){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url),'_blank','noopener');return;}if(navigator.share){navigator.share({title:song+' \u00b7 Solomon Nights',text:txt,url:url}).catch(function(){});return;}var msg=document.getElementById('sharemsg');var show=function(){if(msg){msg.textContent='Link copied. Paste it into '+(p==='instagram'?'Instagram':'TikTok')+'.';msg.style.opacity=1;setTimeout(function(){msg.style.opacity=0;},3500);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(show,show);}else{show();}}
+</script>
+<script>
+/* GA4 first-party measurement (G-GKB9H348P3): consent-aware, mirrors the fbq gate.
+   Added 2026-07-16 because Meta blocks UK/EU pixel events on this Religion-categorized
+   domain; GA4 is the durable funnel measure. Do not remove. */
+(function(){
+  function gaStart(){ if(window.__gaStarted)return; window.__gaStarted=1;
+    var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=G-GKB9H348P3';document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments);};
+    gtag('js',new Date());gtag('config','G-GKB9H348P3');
+    var m=window.meta||{};
+    function hook(id,act){var el=document.getElementById(id);if(el)el.addEventListener('click',function(){gtag('event','spotify_click',{action:act,song:m.song||'',artist:'solomon_nights'});});}
+    hook('save','save');hook('follow','follow');
+  }
+  var tz='';try{tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');}catch(e){}
+  var eu=tz.indexOf('Europe/')===0;var c=null;try{c=localStorage.getItem('sn-consent');}catch(e){}
+  if(!eu||c==='granted'){gaStart();return;}
+  if(c==='denied')return;
+  var t=setInterval(function(){
+    var ok=document.getElementById('sn-cc-ok');if(ok&&!ok.__ga){ok.__ga=1;ok.addEventListener('click',gaStart);}
+    var cc=null;try{cc=localStorage.getItem('sn-consent');}catch(e){}
+    if(cc==='granted'){clearInterval(t);gaStart();}
+    if(cc==='denied')clearInterval(t);
+  },500);
+  setTimeout(function(){clearInterval(t);},120000);
+})();
+</script>
+</body>
+</html>
